@@ -1,0 +1,2 @@
+defmodule Weathers do
+end
