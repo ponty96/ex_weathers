@@ -6,7 +6,9 @@ defmodule Weathers.CLI do
   """
 
   def run(argv) do
-    parse_args(argv)
+    argv
+    |> parse_args
+    |> process
   end
 
   @doc """
@@ -32,6 +34,35 @@ defmodule Weathers.CLI do
         {[get: true, help: true], _, _} -> %{error: "Sorry check commands passed to terminal"}
     end
 
+  end
+
+  @doc """
+    This function gets the returned value from parsing the command line arguments and based on the inputs either
+    1 - returns a help
+    2 - calls the fetch weather by lat | long function
+    3 - calls the fetch weather by city function
+    4 - calls the fetch weather by zip code function
+    5 - retunrs a command line error message
+  """
+  def process(:help) do
+    # use IO.ANSI instead but for now just use IO.puts
+    IO.puts """
+    usage1: weather --get --lat  enter latitude --lon enter longtitude
+    usage2: weather --get --city enter city or city, country code
+    usage3: weather --get --zip  enter zip code
+    """
+  end
+
+  def process(%{lat: lat, lon: lon}) do
+    IO.puts "should fetch by lat & lon: #{lat} : #{lon}"
+  end
+
+  def process(%{city: the_city}) do
+    IO.puts "should fetch by city,#{the_city}"
+  end
+
+  def process(%{zip: zip_code}) do
+    IO.puts "should fetch by zip code, #{zip_code}"
   end
 
 
