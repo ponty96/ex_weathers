@@ -29,6 +29,7 @@ defmodule Weathers.CLI do
         {[get: true, city: the_city], _, _} -> %{city: the_city}
         {[get: true, zip: zip_code], _, _} -> %{zip_code: zip_code}
         # find pattern match for when it contains help and any other switches to return an error
+        {[get: true, help: true], _, _} -> %{error: "Sorry check commands passed to terminal"}
     end
 
   end

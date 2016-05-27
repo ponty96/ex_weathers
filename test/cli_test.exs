@@ -21,4 +21,8 @@ defmodule CliTest do
     assert parse_args(["--get", "--zip", "30000"]) == %{zip_code: 30000}
   end
 
+  test "map of error returned with --get --help, or -h" do
+    assert parse_args(["--get", "--help", "--lat"]) == %{error: "Sorry check commands passed to terminal"}
+  end
+
 end
