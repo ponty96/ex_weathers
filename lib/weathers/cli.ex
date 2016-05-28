@@ -58,7 +58,7 @@ defmodule Weathers.CLI do
     Weathers.OpenWeathers.fetch(params)
   end
 
-  defp decode_response({:ok, body}), do: body
+  defp decode_response({:ok, body}), do: Weathers.OpenWeathers.process_response(body)
 
   defp decode_response({:error, error}) do
     {_, message} = List.keyfind(error, "message", 0)
