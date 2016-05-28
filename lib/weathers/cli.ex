@@ -9,6 +9,7 @@ defmodule Weathers.CLI do
     argv
     |> parse_args
     |> process
+    |> decode_response
   end
 
   @doc """
@@ -44,7 +45,7 @@ defmodule Weathers.CLI do
     4 - calls the fetch weather by zip code function
     5 - retunrs a command line error message
   """
-  def process(:help) do
+  defp process(:help) do
     # use IO.ANSI instead but for now just use IO.puts
     IO.puts """
     usage1: weather --get --lat  enter latitude --lon enter longtitude
@@ -53,16 +54,16 @@ defmodule Weathers.CLI do
     """
   end
 
-  def process(%{lat: lat, lon: lon}) do
-    IO.puts "should fetch by lat & lon: #{lat} : #{lon}"
+  defp process(params) do
+    Weathers.OpenWeathers.fetch(params)
   end
 
-  def process(%{city: the_city}) do
-    IO.puts "should fetch by city,#{the_city}"
-  end
+  defp decode_response({:ok, body}), do: body
 
-  def process(%{zip: zip_code}) do
-    IO.puts "should fetch by zip code, #{zip_code}"
+  defp decode_response({:error, error}) do
+    {_, message} = List.keyfind(error, "message", 0)
+    IO.puts "Error fetching Weather: #{message}"
+    System.halt(2)
   end
 
 
