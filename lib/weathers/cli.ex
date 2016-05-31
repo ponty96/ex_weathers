@@ -52,6 +52,7 @@ defmodule Weathers.CLI do
     usage2: weather --get --city enter city or city, country code
     usage3: weather --get --zip  enter zip code
     """
+    {:error, "Sorry check commands passed to terminal"}
   end
 
   defp process(params) do
@@ -61,7 +62,14 @@ defmodule Weathers.CLI do
   defp decode_response({:ok, body}), do: Weathers.OpenWeathers.process_response(body)
 
   defp decode_response({:error, error}) do
-    {_, message} = List.keyfind(error, "message", 0)
+
+    message = if error == "Sorry check commands passed to terminal" do
+                error
+              else
+                {_, msg} = List.keyfind(error, "message", 0)
+                msg
+              end
+
     IO.puts "Error fetching Weather: #{message}"
     System.halt(2)
   end
