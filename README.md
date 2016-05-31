@@ -1,5 +1,9 @@
 # ex_weathers
-Playing around with http://openweathermap.org/ in Elxiir as a command line tool
+Playing around with http://openweathermap.org/ in Elxiir as a command line tool.
+
+In an effort to practice what have learnt so for with [Elixir](http://elixir-lang.org/), this is ex_weathers a command line tool implementing some parts of http://openweathermap.org/ web Api. 
+
+I wish to implement most of their Api and play more with Elixir but for now, its been #COOL playing [Elixir](http://elixir-lang.org/)
 
 ### Usage
 
