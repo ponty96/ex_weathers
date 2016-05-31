@@ -47,8 +47,26 @@ defmodule Weathers.OpenWeathers do
     %{"deg" => deg, "speed" => speed} = response["wind"]
     %{"icon" => cloud_icon, "main" => cloudiness} = Enum.at(response["weather"],0)
     %{"humidity" => humidity, "pressure" => pressure, "temp_max" => temp_max, "temp_min" => temp_min} = response["main"]
+    location_name = response["name"]
     %{"country" => country, "sunrise" => sunrise, "sunset" => sunset} = response["sys"]
-      speed = speed ++ "m/s"
+      speed = speed = to_string(speed) <> "m/s"
+      average_temp = (temp_max + temp_min) / 2
+
+        IO.puts """
+
+
+                    Weather Details @ #{location_name}
+                    ----------------------------------
+                     Wind        |  #{speed} @ a #{deg} angle
+                     Cloudiness  |  #{cloudiness}}
+                     Pressure    |  #{pressure}
+                     Humidty     |  #{humidity}
+                     Sunrise     |  #{sunrise}
+                     Sunset      |  #{sunset}
+                     Min_Temp    |  #{temp_min}
+                     Max_Temp    |  #{temp_max}
+                     Avg_Temp    |  #{average_temp}
+            """
 
   end
 
